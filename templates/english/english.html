@@ -1,0 +1,94 @@
+{% extends 'mysite/base.html' %}
+{% load static %}
+ 
+{% block head %} 
+<!-- movieの子を適応されて欲しい。 --> 
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/snippets/small_header.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/english.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="h-100">
+    <div class="page-wrapper d-flex flex-row h-100 w-100">
+      
+      {% include 'mysite/snippets/sidebar.html' %}
+      
+      <!-- 全ページの右のコンテンツ -->
+      <div class="page-content h-100 w-100">
+
+        {% include 'mysite/snippets/header.html' %}
+        {% include 'mysite/snippets/small_header.html' %}
+        
+          <!-- 下のコンテンツ -->
+        <div class="big-display h-100 w-100">
+          <div class="d-flex flex-row w-100">
+            <div class="got_video ml-5 mr-3">
+              <div class="got_video_row">
+                <p class="translate_title mb-1">English Groupe</p>
+                <p class="now_mov_header mt-2 pb-1 mb-0">海外旅・大陸横断</p>
+                <div class="video_row_1 d-flex flex-row">
+                  {% for video in got_video1 %}
+                  <div class="video_row h-100">
+                    <a href="https://www.youtube.com/watch?v={{ video.link_url }}"><img src="{{ video.thumbnails }}" class="now_img py-1 px-1 h-100"></a>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="got_video_row">
+                <p class="now_mov_header mt-2 pb-1 mb-0">Hapa英会話</p>
+                <div class="video_row_1 d-flex flex-row">
+                  {% for video in got_video2 %}
+                  <div class="video_row h-100">
+                    <a href="https://www.youtube.com/watch?v={{ video.link_url }}"><img src="{{ video.thumbnails }}" class="now_img py-1 px-1 h-100"></a>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+              <div class="got_video_row">
+                <p class="now_mov_header mt-2 pb-1 mb-0">Atsueigo</p>
+                <div class="video_row_1 d-flex flex-row">
+                  {% for video in got_video3 %}
+                  <div class="video_row h-100">
+                    <a href="https://www.youtube.com/watch?v={{ video.link_url }}"><img src="{{ video.thumbnails }}" class="now_img py-1 px-1 h-100"></a>
+                  </div>
+                  {% endfor %}
+                </div>
+              </div>
+            </div>
+            
+            <div class="right_content d-flex flex-column mr-4">
+              <div class="translate px-4 w-100">
+                <form class="input-group mr-3 my-4" action="{% url 'english:translate' %}" method="POST">
+                  {% csrf_token %}
+                  <input type="search" name="search_query" class="form-control input-group-prepend" placeholder="翻訳したい英語を入力"></input>
+                  <span class="input-group-btn input-group-append">
+                    <button type="submit" name="btn-search" class="btn btn-primary"><i class="fas fa-search"></i>翻訳</button>
+                  </span>
+                </form>
+              </div>
+
+              <div class="user_english ml-3">
+                <p class="now_mov_header pb-1 mb-0">ユーザー単語帳</p>
+                {% for vocablary in user_english %}
+                <div class="user_english_row d-flex flex-row mb-2">
+                  <p class="user_search_text my-1 pl-1 pr-2">{{vocablary.query_lang}}: <strong>{{vocablary.search_text}}</strong></p>
+                  <p class="user_result my-1 pl-2 pr-2">{{vocablary.changed_lang}}: <strong>{{vocablary.changed_text}}</strong></p>
+                </div>
+                {% endfor %}
+                {% if user.id == 1 %}
+                <form class="reload_btn pt-2 pl-3" method="POST" action="{% url 'english:reload_data' %}">
+                  {% csrf_token %}
+                  <button type="submit" name="reload_btn" class="btn btn-primary">更新</button>
+                </form>
+                {% endif %}
+              </div>
+            </div>
+          </div>
+        <!-- 下のコンテンツ -->
+      </div>
+    <!-- 全ページの右のコンテンツ -->
+    </div>
+</main>
+
+{% endblock %}

@@ -1,0 +1,89 @@
+{% extends 'mysite/base.html' %}
+{% load static %}
+ 
+{% block head %} 
+<!-- movieの子を適応されて欲しい。 --> 
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/snippets/small_header.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/movie.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/book.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="h-100">
+    <div class="page-wrapper d-flex flex-row h-100 w-100">
+      
+      {% include 'mysite/snippets/sidebar.html' %}
+      
+      <!-- 全ページの右のコンテンツ -->
+        <div class="page-content h-100 w-100" >
+
+            {% include 'mysite/snippets/header.html' %}
+            {% include 'mysite/snippets/small_header.html' %}
+            <!-- 下のコンテンツ -->
+            <div class="big-display h-100">
+              <form class="input-group w-25 float-right mx-4 mb-2 mt-5" action="{% url 'book:search_books' %}" method="POST">
+                {% csrf_token %}
+                <input type="search" name="search_query" class="form-control input-group-prepend" placeholder="書籍のタイトルを入力"></input>
+                <span class="input-group-btn input-group-append">
+                  <button type="submit" name="btn-search" class="btn btn-primary"><i class="fas fa-search"></i> 検索</button>
+                </span>
+              </form>
+
+
+              <div class="search_header">
+                <p class="search_result_title">{{search_title}}</p>
+              </div>
+
+              <!-- search_movie_all -->
+              <div class="search_result px-5">
+                {% for book in book_data %}
+                <!-- movie_row -->
+                <div class="movie-row d-flex flex-row mx-3 mb-4" style="border: 1px solid rgb(0, 0, 0, 0.1);"> 
+                  <img src="{{book.image}}" class="movie_img p-2">
+                  <div class="p-2 w-100">
+                    <div class="top_row>"> 
+                      <div class="scroll_title d-flex w-100">
+                        <p class="movie_title mb-1">{{book.title}}</p>
+                      </div>
+                      <div class="d-flex flex-row pt-2">
+                        <p class="pr-4 mb-2">著者・作者:　<strong>{{book.author}}</strong></p>
+                        <p class="mb-2">出版日:　<strong>{{book.salesDate}}</strong></p>                        
+                      </div>
+                      <div class="search_review d-flex flex-row">
+                        <p class="mb-0 mb-1">出版社:　<strong>{{book.publisherName}}</strong></p>
+                        <p class="pl-4 mb-1">評価:　<strong>{{book.reviewAverage}} / 5.0</strong></p>                  
+                      </div>
+                      <a href="{{book.itemUrl}}" class="detail_btn mt-0">詳細ページへ</a>
+                    </div>                    
+                    <!-- ここに線を入れたい -->
+                    <div class="under_row d-flex flex-row">
+                      <p class="m-0 mt-2">いいねボタン</p>
+                      <p class="m-0 mt-2 px-3">タグ一覧</p>
+                      {% if user.is_authenticated %}
+                      <form class="save_button pt-1" action="{% url 'book:user_book' %}" method="POST">
+                        {% csrf_token %} 
+                        <button type="submit" name="save_btn" class="btn btn-primary" value={{book.isbn}}>保存画面に進む</button>
+                      </form>
+                      {% else %}
+                      <form class="save_button pt-1" action="/login/" method="POST">
+                        {% csrf_token %} 
+                        <button type="submit" name="save_btn" class="btn btn-primary" value={{book.isbn}}>保存画面に進む</button>
+                      </form>
+                      {% endif %}
+                    </div>
+                  </div> 
+                </div>
+                {% endfor %}
+                <!-- movie_row -->
+              </div>
+              <!-- search_movie_all -->
+
+            </div>
+            <!-- 下のコンテンツ -->
+        </div>
+      <!-- 全ページの右のコンテンツ -->
+    </div>
+</main>
+
+{% endblock %}

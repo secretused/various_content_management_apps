@@ -1,0 +1,20 @@
+<!-- 各appのHomeを作成してurlを通したらその都度urlを変更する -->
+<!-- 小さいheader -->
+<div class="main-wrapper" id="mainwrapper">
+    <form class="img_container main-box1" action="{% url 'movie:saved_movie' %}" method="POST">
+        <a class="box box1" href="{% url 'movie:saved_movie' %}">Movie</a>
+    </form> 
+    <div class="img_container main-box2">
+        <a class="box box2" href="#">Blog</a>
+    </div>
+    <div class="img_container main-box3">
+        <a class="box box3" href="{% url 'idea:idea_home' %}">Idea</a>
+    </div>
+    <form class="img_container main-box4" action="{% url 'book:saved_book' %}" method="POST">
+        <a class="box box4" href="{% url 'book:saved_book' %}">Book</a>
+    </form>
+    <div class="img_container main-box5">
+        <a class="box box5" href="{% url 'english:get_youtube_data' %}">English</a>
+    </div>
+</div>
+<!-- 小さいheader --> 

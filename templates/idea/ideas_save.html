@@ -1,0 +1,80 @@
+{% extends 'mysite/base.html' %}
+{% load static %}
+ 
+{% block head %} 
+<!-- movieの子を適応されて欲しい。 --> 
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/snippets/small_header.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/idea.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="h-100">
+    <div class="page-wrapper d-flex flex-row h-100 w-100">
+      
+      {% include 'mysite/snippets/sidebar.html' %}
+      
+      <!-- 全ページの右のコンテンツ -->
+        <div class="page-content h-100 w-100" >
+
+            {% include 'mysite/snippets/header.html' %}
+            {% include 'mysite/snippets/small_header.html' %}
+
+            <!-- 下のコンテンツ -->
+            <div class="big-display w-100 h-100">
+                <div class="save_header">
+                    <p class="save_result_title pt-3 mb-4">アイデア投稿画面</p>
+                </div>
+                <form method="POST" action="{% url 'idea:save_idea' %}" class="idea_form pb-5">
+                    {% csrf_token %}
+                    <div class="idea_save_content px-4 py-4">
+                        <div class="idea_row d-flex flex-row mb-3">
+                            <p class="row_title">投稿者</p>
+                            <p class="w-100"><strong>{{user_name}}</strong></p>
+                            <input type="hidden" name="user_name" value="{{user_name}}">
+                        </div>
+                        <div class="idea_row d-flex flex-row">
+                            <p class="row_title">タイトル<span class="required_title ml-1">*必須</span></p>
+                            <input type="text" name="idea_title" class="idea_title w-100 mb-3" required> 
+                        </div>
+                        <div class="idea_row d-flex flex-row mt-3">
+                            <p class="row_title">アイデア詳細<span class="required_title ml-1"></span></p>
+                            <textarea type="text" name="idea_detail" class="idea_detail w-100 mb-3"></textarea>
+                        </div>
+                        <div class="idea_row d-flex flex-row mt-3">
+                            <div class="row_title d-flex flex-column">
+                                <p class="mb-0">タグ(検索用ワード)</p>
+                                <p class="sub_title mb-0">カンマ「,」区切りで複数入力可能</p>
+                            </div>
+                            <input type="text" name="idea_tag" class="idea_tag mb-3"> 
+                        </div>
+                        <div class="idea_row d-flex flex-row mt-3">
+                            <p class="row_title">思いついたきっかけ</p>
+                            <textarea type="text" name="idea_from" class="idea_from w-100 mb-3"></textarea>
+                        </div>
+                        <div class="idea_row d-flex flex-row mt-3">
+                            <p class="row_title">アイデア用途</p>
+                            <textarea type="text" name="idea_for" class="idea_for w-100 mb-3"></textarea>
+                        </div>
+                        <div class="idea_row d-flex flex-row mt-3">
+                            <p class="row_title">アイデアターゲット</p>
+                            <textarea type="text" name="idea_target" class="idea_target w-100 mb-3"></textarea>
+                        </div>
+                        <div class="idea_row_last d-flex flex-row mt-3">
+                            <p class="row_title">販売希望価格<span class="required_title ml-1">*必須</span></p>
+                            <input type="number" name="idea_price" class="idea_price mb-3" required>
+                            <p class="price_subtitle mt-3">円推定</p>
+                        </div>
+                    </div>
+                    <div class="reserve_btn mt-4">
+                        <button type="submit" name="reserve_btn" class="btn btn-primary w-100" value="{{user_id}}">登録する</button>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+      <!-- 全ページの右のコンテンツ -->
+    </div>
+</main>
+
+{% endblock %}

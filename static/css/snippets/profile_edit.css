@@ -1,0 +1,39 @@
+.mypage_edit_display {
+	width: 40%;
+	margin-left: 10%;
+	margin-right: 3%;
+}
+
+.contact {
+	width: 100%;
+	height: auto !important;
+	background-color: rgb(242, 242, 242, 0.5);
+	border: 1px solid rgb(0, 0, 0, 0.1) !important;
+	border-radius: 3px;
+}
+
+.contact_textarea {
+	resize: none;
+	height: 175px;
+}
+
+.contact_title {
+	color: black;
+	font-size: xx-large;
+	font-family: "Toppan Bunkyu Midashi Gothic", "凸版文久見出しゴシック";
+	opacity: 0.8;
+	display: inline-block;
+	vertical-align: middle;
+}
+
+.password_edit_display {
+	min-width: 30%;
+}
+
+.password_contact {
+	width: 120%;
+	height: 100% !important;
+	background-color: rgb(242, 242, 242, 0.5);
+	border: 1px solid rgb(0, 0, 0, 0.1) !important;
+	border-radius: 3px;
+}

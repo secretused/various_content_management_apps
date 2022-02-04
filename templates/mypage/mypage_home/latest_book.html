@@ -1,0 +1,31 @@
+{% load static %}
+{% for book in latest_book %}
+<p　class="latest_row_title mb-1">最近読んだ書籍</p>
+<div class="saved_book-row d-flex flex-row mb-1">
+    <img src="{{book.ImageUrl}}" class="saved_img p-1">
+    <div class="d-flex flex-column pl-2 w-100">
+        <div class="top_saved_row pt-2 mb-1 d-flex flex-row"> 
+        <p class="saved_title mb-0">書籍名: <strong>{{book.title}}</strong></p>
+        </div>
+        <div class="d-flex flex-row">
+        <p class="release_date pr-3 m-0">公開日: {{book.salesDate}}</p>
+        <p class="vote_average pr-3 m-0">視聴日: {{book.created_at|date:"Y-m-j"}}</p>
+        <p class="vote_average m-0">評価: {{book.vote_rate}}</p>
+        </div>
+        <div class="under_row d-flex flex-row">
+        <p class="auther_name mb-0 mr-3">created by <strong>{{book.auther}}</strong></p>
+        {% if user.is_authenticated %}
+        <form class="save_button pt-1 pr-2" action="{% url 'book:mypage_edit_book' %}" method="POST">
+            {% csrf_token %} 
+            <button type="submit" name="mypage_edit_btn" class="btn btn-sm btn-secondary" value={{book.id}}>編集</button>
+        </form>
+            
+        <form class="save_button pt-1" action="{% url 'book:mypage_delete_book' %}" method="POST">
+            {% csrf_token %} 
+            <button type="submit" name="mypage_delete_btn" class="btn btn-sm btn-danger" value={{book.id}}>削除</button>
+        </form>
+        {% endif %}
+        </div> 
+    </div>　
+</div>
+{% endfor %}

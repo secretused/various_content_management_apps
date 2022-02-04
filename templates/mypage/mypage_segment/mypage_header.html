@@ -1,0 +1,35 @@
+{% load static %}
+<!-- トップバー -->
+<nav class="navbar px-3 py-0 my-4 bg-light position-static justify-content-center" id="navbar">
+    <!-- 中央画像 -->
+    <!-- text-muted mx-auto -->
+    <a class="home_button position-absolute" style="color:inherit; text-decoration:none;" href="/">
+        <p class="nav-item-underline mb-0 link-secondary">HOME</p>
+    </a>
+    <a class="mypage_button position-absolute" style="color:inherit; text-decoration:none;" href="{% url 'mypage:mypage' %}">
+        <p class="nav-item-underline mb-0 link-secondary">MYPAGE</p>
+    </a>
+    <a class="nav-item-image" href="/">
+        <img src="{{ STATIC_URL }}img/header.jpg" class="text-muted" width="200" height="100" alt="サンプル">
+    </a>
+    <ul class="navbar-nav d-flex flex-row position-absolute end-0">
+        <li class="nav-item-underline ml-3 text-muted">
+            <a class="p-2 link-secondary" href="#" style="text-decoration:none;">ABOUT</a>
+        </li>
+        <li class="nav-item-underline ml-3 text-muted">
+            <a class="p-2 link-secondary" href="/contact" style="text-decoration:none;">CONTACT</a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item-underline mx-3 text-muted">
+            <a class="p-2 link-secondary" href="/logout" style="text-decoration:none;">LOGOUT</a>
+        </li>
+        {% else %}
+        <li class="nav-item-underline mx-3 text-muted">
+            <a class="p-2 link-secondary" href="/login" style="text-decoration:none;">LOGIN</a>
+            <a>/</a>
+            <a class="p-2 link-secondary" href="/signup" style="text-decoration:none;">SIGNUP</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+<!-- トップバー -->

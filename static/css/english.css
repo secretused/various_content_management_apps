@@ -1,0 +1,113 @@
+.big-display {
+	height: 80%;
+}
+
+.now_mov_header {
+	font-size: large;
+	font-family: "Toppan Bunkyu Midashi Gothic", "凸版文久見出しゴシック";
+}
+
+.got_video {
+	max-width: 68%;
+	height: 100%;
+	padding-top: 2%;
+}
+
+.video_row_1 {
+	overflow-x: scroll;
+	border-radius: 5px;
+	border: 1px solid rgb(0, 0, 0, 0.2) !important;
+}
+
+.now_img {
+	min-width: 10%;
+	min-width: 10%;
+	max-height: 20%;
+}
+
+.reload_btn {
+	margin-left: auto;
+	width: 25%;
+}
+
+/* <-- translate --> */
+.big-display {
+	height: 60%;
+}
+
+.translate_result {
+	min-width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.translate_title {
+	color: black;
+	font-size: xx-large;
+	font-family: "Toppan Bunkyu Midashi Gothic", "凸版文久見出しゴシック";
+	opacity: 0.8;
+	display: inline-block;
+}
+
+.translate_row {
+	text-align: center;
+	min-width: 35%;
+}
+
+.english_result {
+	padding: 5% 5%;
+	font-size: x-large;
+	font-family: "Toppan Bunkyu Midashi Gothic", "凸版文久見出しゴシック";
+	opacity: 0.7;
+	text-align: center;
+}
+
+/* <-- translate --> */
+
+/* <-- user_english --> */
+.right_content {
+	min-width: 20%;
+}
+
+.user_english {
+	min-width: 35%;
+}
+
+.user_english_row {
+	min-width: 30%;
+	/* max-width: 60% !important; */
+	min-height: 15% !important;
+	white-space: nowrap;
+	align-items: center;
+	border: 1px solid rgb(0, 0, 0, 0.2) !important;
+	border-radius: 3px;
+}
+
+.user_search_text {
+	overflow-x: scroll;
+	white-space: nowrap;
+	text-align: center;
+	font-size: large;
+	min-width: 50%;
+}
+
+.user_result {
+	overflow-x: scroll;
+	white-space: nowrap;
+	text-align: center;
+	font-size: large;
+	min-width: 50%;
+}
+/* <-- user_english --> */
+
+/* <-- mypage_tab5 --> */
+.edit_translate_title {
+	margin-top: 6%;
+	color: black;
+	font-size: xx-large;
+	font-family: "Toppan Bunkyu Midashi Gothic", "凸版文久見出しゴシック";
+	opacity: 0.8;
+	display: inline-block;
+}
+/* <-- mypage_tab5 --> */

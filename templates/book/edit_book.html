@@ -1,0 +1,81 @@
+{% extends 'mysite/base.html' %}
+{% load static %}
+ 
+{% block head %} 
+<!-- movieの子を適応されて欲しい。 --> 
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/snippets/small_header.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/movie.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/book.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="d-flex flex-row">
+    
+    <div class="page-wrapper d-flex flex-row h-75 w-100">
+        
+        {% include 'mysite/snippets/sidebar.html' %}
+
+      <!-- 全ページの右のコンテンツ -->
+        <div class="page-content h-100 w-100" >
+
+            {% include 'mysite/snippets/header.html' %}
+            {% include 'mysite/snippets/small_header.html' %}
+            <!-- 下のコンテンツ -->
+            <div class="big-display">  
+                
+                <form class="input-group w-25 float-right mx-4 my-4" action="{% url 'book:search_books' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="search" name="search_query" class="form-control input-group-prepend" placeholder="書籍のタイトルを入力"></input>
+                    <span class="input-group-btn input-group-append">
+                    <button type="submit" name="btn-search" class="btn btn-primary"><i class="fas fa-search"></i> 検索</button>
+                    </span>
+                </form>
+
+                <div class="save_header w-40">
+                    <p class="save_result_title pt-3">書籍編集画面</p>
+                </div>
+
+                <!-- 書籍登録画面  -->
+                <div class="saved_movie_display w-100 pt-2">
+                    {% for book in db_book %}
+                    <div class="db_movie_row d-flex flex-row">
+                        <img src="{{book.ImageUrl}}" class="db_book_img">
+                        <div class="right-row w-100 pl-4">
+                            <div class="movie_detail d-flex flex-colum">
+                                <p class="saved_movie_title mb-0 pr-4">{{book.title}}</p>
+                            </div>
+                            <p class="db_release_date">出版日:　<strong>{{book.salesDate}}</strong></p>
+
+                            <!-- 変更処理をviewでやれるようにIDを送る -->
+                            <form action="{% url 'book:saved_book' %}" method="POST">
+                                {% csrf_token %}
+                                <p class="movie_detail mt-1　mb-0">ユーザー評価</p>
+                                <select name="vote_rate" size="1">
+                                    <option value="{{book.vote_rate}}">{{book.vote_rate}}</option>
+                                    {% with ''|center:10 as range %}
+                                    {% for _ in range %}
+                                        <option value="{{ forloop.counter }}">{{ forloop.counter }}</option>
+                                    {% endfor %}
+                                    {% endwith %}
+                                </select>
+                                <p class="movie_detail　pt-4 mb-0">感想・要約を入力してください</p>
+                                <textarea type="search" name="sum_text" class="form-control input-group-prepend">{{book.summary}}</textarea>
+                                <input type="hidden" name="btn_from" value="{{btn_from}}">
+                                <button type="submit" name="db_edit_btn" class="btn btn-primary mt-2 mr-2" value={{book.id}}>変更を保存</button>
+                                <button type="submit" name="db_delete_btn" class="btn btn-danger mt-2" value={{book.id}}>データを削除</button>
+                            </form>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <!-- 書籍登録画面  -->
+
+            </div>
+            <!-- 下のコンテンツ -->
+        </div>
+      <!-- 全ページの右のコンテンツ -->
+    </div>
+</main>
+
+{% endblock %}

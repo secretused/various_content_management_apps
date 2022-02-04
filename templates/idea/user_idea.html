@@ -1,0 +1,169 @@
+{% extends 'mysite/base.html' %}
+{% load static %}
+{% load boost %}
+ 
+{% block head %} 
+<!-- movieの子を適応されて欲しい。 --> 
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/snippets/small_header.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/idea.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="h-100">
+    <div class="page-wrapper d-flex flex-row h-100 w-100">
+      
+      {% include 'mysite/snippets/sidebar.html' %}
+      
+      <!-- 全ページの右のコンテンツ -->
+      <div class="page-content h-100 w-100" >
+
+        {% include 'mysite/snippets/header.html' %}
+        {% include 'mysite/snippets/small_header.html' %}
+
+        <div class="big-display w-100 h-100">
+          <div class="top_content d-flex flex-row">
+            <p class="idea_home_title mb-1 ml-5 w-100">Idea Groupe</p>
+            {% if user.is_authenticated %}
+            <form class="tweet_form" action="{% url 'idea:save_idea' %}" method="POST">
+              {% csrf_token %}
+              <button type="submit" name="tweet_btn" class="btn btn-primary tweet_btn mr-5" value="">アイデアを投稿</button>
+            </form>
+            {% else %}
+            <form class="tweet_form" action="/login/" method="POST">
+              {% csrf_token %}
+              <button type="submit" name="tweet_btn" class="btn btn-primary tweet_btn mr-5" value="">アイデアを投稿</button>
+            </form>
+            {% endif %}
+          </div>
+          <div class="idea_content mt-4 ml-5 d-flex flex-row">
+            <!-- user_idea_content -->
+            <div class="user_idea_content d-flex flex-column">
+              <p class="saved_header mb-1">ユーザーが最近投稿したアイデア</p>
+              <!-- saved_idea_row -->
+              {% for idea,account_image in db_ideas|zip:account_images %}
+                <div class="saved_idea_row d-flex flex-row px-3 pt-2 pb-1">
+                  <div class="image_comntent mr-3">
+                    <img src="{{account_image}}" class="account_image">
+                  </div>
+                  <div class="right_idea_row d-flex flex-column w-100">
+                    <div class="user_idea_title_row">
+                      <a href="{% url 'idea:user_idea' idea_id=idea.id %}" class="user_idea_title mr-2 mb-0" id="title_clicked">{{idea.idea_title}}</a>
+                    </div>
+                    <div class="user_name_row d-flex flex-row">
+                      <p class="pr-3 mb-0">いいね</p>
+                      <p class="created_at pr-3 m-0">{{idea.created_at|date:"Y-m-d"}}</p>
+                      <p class="username mb-0">{{idea.username}}</p>
+                      {% if user.id == idea.user_id %}
+                        <form class="save_button ml-3　mb-1 mt-0" action="{% url 'idea:idea_edit' %}" method="POST">
+                          {% csrf_token %} 
+                          <button type="submit" name="db_edit_btn" class="btn btn-sm btn-secondary" value={{idea.id}}>編集</button>
+                          <button type="submit" name="db_delete_btn" class="btn btn-sm btn-danger" value={{idea.id}}>削除</button>
+                        </form>
+                      {% endif %}
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+              <!-- saved_idea_row -->
+            </div>
+            <!-- user_idea_content -->
+            <div class="thread_content d-flex flex-column mb-5">
+                <p class="saved_header mb-1">{{username}}さんが最近投稿したアイデア</p>
+                <!-- saved_idea_row -->
+                  <div class="saved_idea_row d-flex flex-row px-3 pt-2 pb-1">
+                    <div class="detail_image_comntent mr-3">
+                      <img src="{{account_image}}" class="account_image">
+                    </div>
+                    <div class="right_idea_row d-flex flex-column w-100">
+                        <div class="user_idea_title_row">
+                            <p class="user_detail_title mb-0" >{{idea_title}}</p>
+                        </div>
+
+                        <div class="idea_row d-flex flex-row mt-3">
+                            <p class="detail_row_title">アイデア詳細</p>
+                            <p>{{idea_detail}}</p>
+                        </div>
+                        <div class="idea_row d-flex flex-row mt-3">
+                            <p class="detail_row_title">タグ(検索用ワード)</p>
+                            {% for tag in idea_tag %}
+                            <p class="mr-2">{{tag}}</p>
+                            {% endfor %}
+                        </div>
+                        <div class="idea_row d-flex flex-row mt-3">
+                            <p class="detail_row_title">思いついたきっかけ</p>
+                            <p>{{idea_from}}</p>
+                        </div>
+                        <div class="idea_row d-flex flex-row mt-3">
+                            <p class="detail_row_title">アイデア用途</p>
+                            <p>{{idea_for}}</p>
+                        </div>
+                        <div class="idea_row d-flex flex-row mt-3">
+                            <p class="detail_row_title">アイデアターゲット</p>
+                            <p>{{idea_target}}</p>
+                        </div>
+                        <div class="idea_row_last d-flex flex-row mt-3">
+                            <p class="detail_row_title">販売希望価格</p>
+                            <p class="price_subtitle">{{idea_price}}円(税込)</p>
+                        </div>
+
+                        <div class="detail_user_name_row d-flex flex-row pt-2">
+                            <p class="mr-5 mb-0">いいね</p>
+                            <p class="created_at mr-5 m-0">{{created_at|date:"Y-m-d"}}</p>
+                            <p class="mb-0">by <span class="username">{{username}}</span></p>
+                        </div>
+                        <div class="comment_form　mt-3 mb-4 w-100">
+                          <form method="POST" action="" class="w-100 d-flex flex-row">
+                            {% csrf_token %}
+                            <input type="hidden" name="user_id" value="{{user_id}}">
+                            <input type="hidden" name="user_name" value="{{username}}">
+                            <input type="text" name="comment_form" class="comment_form mr-3 px-2" placeholder="コメントする">
+                            <button type="submit" name="add_comment_btn" class="add_comment_btn btn btn-sm btn-primary" value={{idea_id}}>送信</button>
+                          </form>
+                        </div>
+                    </div>
+                  </div>
+                <!-- saved_idea_row -->
+                {% if user_comment %}
+                <div class="d-flex flex-row">
+                  <p class="saved_header mb-1 mt-4">アイデアへのコメント</p>
+                  {% if comment_count > 2 %}
+                  <form method="POST" action="{% url 'idea:user_idea' idea_id=user_comment_id %}">
+                    {% csrf_token %}
+                    <button name="more_btn" class="more_button mb-1 mt-4 mr-0" value="{{user_comment_id}}">{{comment_count}}件のコメントを見る</button>
+                  </form>
+                  {% endif %}
+                </div>
+                <!-- saved_idea_row -->
+                <div class="comment_content">
+                  {% for comment in user_comment%}
+                  <div class="comment_content_row d-flex flex-row py-2">
+                    <img src="{{comment.account_image}}" class="comment_account_image ml-2 mr-3 mb-3">
+                    <div class="right_idea_row w-100 mr-2">
+                      <div class="user_idea_title_row">
+                        <p class="idea_comment mr-2 mb-0">{{comment.comment}}</p>
+                      </div>
+                      <div class="comment_user_name_row d-flex flex-row1">
+                        <p class="mr-4 mb-0">いいね</p>
+                        <p class="created_at mr-4 m-0">{{comment.created_at|date:"Y-m-d"}}</p>
+                        <p class="mb-0">by <span class="username">{{comment.username}}</span></p>
+                        {% if user.id == comment.user_id %}
+                        <form class="save_button ml-3　mb-0 mt-0" action="{% url 'idea:user_idea' idea_id=comment.idea_id %}" method="POST">
+                          {% csrf_token %} 
+                          <button type="submit" name="comment_delete_btn" class="btn btn-sm btn-danger" value={{comment.id}}>削除</button>
+                        </form>
+                        {% endif %}
+                      </div>
+                    </div>
+                  </div>
+                  {% endfor %}
+                </div>
+                {% endif %}
+            </div>
+            <!-- user_idea_content -->
+        </div>
+      <!-- 全ページの右のコンテンツ -->
+    </div>
+</main>
+
+{% endblock %}

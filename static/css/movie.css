@@ -1,0 +1,222 @@
+/* movieのmain画面 */
+main {
+	height: 79%;
+}
+
+.big-display {
+	height: 80%;
+}
+
+/* <-- saved_movie --> */
+.movie_home_title {
+	margin-top: 3%;
+	color: black;
+	font-size: xx-large;
+	font-family: "Toppan Bunkyu Midashi Gothic", "凸版文久見出しゴシック";
+	opacity: 0.8;
+	display: inline-block;
+}
+
+.saved_movie {
+	min-width: 45% !important;
+	height: 100% !important;
+	margin-bottom: 2%;
+}
+
+.saved_movie-row {
+	height: 115px !important;
+	width: 100%;
+	border: 1px solid rgb(0, 0, 0, 0.2) !important;
+	border-radius: 5px;
+	font-family: "arial unicode ms";
+	background-color: white;
+	white-space: nowrap;
+	overflow-x: scroll;
+	/* overflow: hidden;
+	text-overflow: ellipsis; */
+}
+
+.top_saved_row {
+	height: 30%;
+}
+
+.saved_header {
+	font-size: large;
+	font-family: "Toppan Bunkyu Midashi Gothic", "凸版文久見出しゴシック";
+	width: 100% !important;
+}
+
+.saved_img {
+	min-width: 15%;
+	height: auto;
+}
+/* <-- saved_movie --> */
+
+/* <-- recommend_movie --> */
+.recommend_movie {
+	width: 70% !important;
+	border-radius: 5px;
+	border: 1px solid rgb(0, 0, 0, 0.2) !important;
+}
+
+.now_mov_header {
+	font-size: large;
+	font-family: "Toppan Bunkyu Midashi Gothic", "凸版文久見出しゴシック";
+}
+
+.now_loading {
+	width: 95%;
+	height: 22%;
+	overflow-x: scroll;
+	border-radius: 5px;
+	border: 1px solid rgb(0, 0, 0, 0.2) !important;
+}
+
+.now_img {
+	width: 100%;
+}
+/* <-- recommend_movie --> */
+
+/* movieのmain画面 */
+
+/* <- user_movies.html -> */
+.search_result {
+	display: grid;
+	grid-template-columns: 50% 50%;
+	width: 100% !important;
+}
+
+.search_header {
+	min-width: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.search_result_title {
+	color: black;
+	font-size: x-large;
+	font-family: "Toppan Bunkyu Midashi Gothic", "凸版文久見出しゴシック";
+	opacity: 0.8;
+	/* padding-left: 5%; */
+	display: inline-block;
+	height: 40px;
+}
+
+.scroll_title {
+	overflow-x: auto;
+	width: 100%;
+}
+
+.movie_title {
+	text-align: center;
+	font-family: "Toppan Bunkyu Midashi Gothic", "凸版文久見出しゴシック";
+	opacity: 0.85;
+	font-size: 140%;
+	width: 100%;
+	/* letter-spacing: -1px; */
+	/* text-overflow: ellipsis; */
+}
+
+.movie_img {
+	min-width: 25% !important;
+	height: auto;
+}
+
+.movie-row {
+	width: 95%;
+	height: 200px;
+	border-radius: 5px;
+	white-space: nowrap;
+	overflow: hidden;
+	overflow-x: scroll;
+	/* text-overflow: ellipsis; */
+}
+
+.under_row {
+	margin-top: 1.5%;
+	border-top: 1px solid rgb(0, 0, 0, 0.2);
+}
+
+.auther_name {
+	font-size: large;
+	margin-top: 1%;
+}
+/* <- user_movies.html -> */
+
+/* <-- book_save --> */
+.save_header {
+	margin-left: 45%;
+	padding-top: 3%;
+	/* padding-left: 4%; */
+}
+
+.save_result_title {
+	color: black;
+	font-size: x-large;
+	font-family: "Toppan Bunkyu Midashi Gothic", "凸版文久見出しゴシック";
+	opacity: 0.8;
+	display: inline-block;
+}
+
+.saved_movie_row {
+	padding-right: 10%;
+	padding-left: 10%;
+	padding-bottom: 1%;
+}
+
+.saved_movie_img {
+	min-width: 30%;
+	height: 100%;
+}
+
+.movie_detail {
+	font-size: large;
+}
+
+.saved_movie_title {
+	text-align: left;
+	color: black;
+	font-size: x-large;
+	font-family: "Toppan Bunkyu Midashi Gothic", "凸版文久見出しゴシック";
+	opacity: 0.8;
+	white-space: nowrap;
+	overflow-x: scroll;
+	/* overflow: hidden; */
+}
+
+.movie_overview {
+	overflow: hidden;
+	overflow-y: scroll;
+	height: 17%;
+	border: 1px solid rgba(110, 67, 67, 0.2);
+}
+
+textarea {
+	resize: none;
+	height: 100px;
+}
+/* <-- book_save --> */
+
+/* <-- edit_movie --> */
+.db_release_date {
+	padding-top: 0.5%;
+}
+
+.db_movie_img {
+	min-width: 25% !important;
+	height: auto;
+}
+
+.db_movie_row {
+	padding-right: 15%;
+	padding-left: 15%;
+	padding-bottom: 1%;
+}
+/* <-- edit_movie --> */
+
+/* <-- mypage_tab1 --> */
+.detail_btn {
+	text-decoration: none;
+}
+/* <-- mypage_tab1 --> */

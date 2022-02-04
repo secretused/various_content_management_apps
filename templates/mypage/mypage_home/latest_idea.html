@@ -1,0 +1,24 @@
+{% load static %}
+<p　class="latest_row_title mb-1">最近投稿したアイデア</p>
+{% for idea in latest_idea %}
+<div class="saved_idea_row d-flex flex-row mb-1">
+    <div class="saved_idea d-flex flex-row px-3 pt-2 pb-1 w-100">
+        <div class="right_idea_row d-flex flex-column w-100">
+          <div class="user_idea_title_row h-50">
+            <a href="{% url 'idea:user_idea' idea_id=idea.id %}" class="latest_idea_title mr-2 mb-0" id="title_clicked">{{idea.idea_title}}</a>
+          </div>
+          <div class="user_name_row d-flex flex-row h-50 mb-2">
+            <p class="pr-3 mb-0">いいね</p>
+            <p class="created_at pr-3 m-0">{{idea.created_at|date:"Y-m-d"}}</p>
+            <p class="username mb-0">{{idea.username}}</p>
+            {% if user.id == idea.user_id %}
+              <form class="save_button ml-3 mt-0" action="{% url 'idea:idea_edit' %}" method="POST">
+                {% csrf_token %} 
+                <button type="submit" name="db_edit_btn" class="btn btn-sm btn-secondary" value={{idea.id}}>編集</button>
+              </form>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+</div>
+{% endfor %}

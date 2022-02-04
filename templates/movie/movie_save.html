@@ -1,0 +1,81 @@
+{% extends 'mysite/base.html' %}
+{% load static %}
+ 
+{% block head %} 
+<!-- movieの子を適応されて欲しい。 --> 
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/snippets/small_header.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/movie.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="d-flex flex-row">
+    
+    <div class="page-wrapper d-flex flex-row h-100 w-100">
+        
+        {% include 'mysite/snippets/sidebar.html' %}
+
+      <!-- 全ページの右のコンテンツ -->
+        <div class="page-content h-100 w-100" >
+
+            {% include 'mysite/snippets/header.html' %}
+            {% include 'mysite/snippets/small_header.html' %}
+            <!-- 下のコンテンツ -->
+            <div class="big-display">  
+                
+                <form class="input-group w-25 float-right mx-4 my-4" action="{% url 'movie:search_movies' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="search" name="search_query" class="form-control input-group-prepend" placeholder="映画のタイトルを入力"></input>
+                    <span class="input-group-btn input-group-append">
+                    <button type="submit" name="btn-search" class="btn btn-primary"><i class="fas fa-search"></i> 検索</button>
+                    </span>
+                </form>
+
+                <div class="save_header w-40">
+                    <p class="save_result_title pt-3">映画保存画面</p>
+                </div>
+
+                <!-- 書籍登録画面  -->
+                <div class="saved_movie_display w-100 pt-2">
+                    <div class="saved_movie_row d-flex flex-row">
+                        <img src="https://image.tmdb.org/t/p/w92{{poster_path}}" class="saved_movie_img">
+                        <div class="right-row w-100 pl-4">
+                            <p class="saved_movie_title">{{title}}</p>
+                            <div class="movie_detail d-flex flex-colum">
+                                <p class="pr-4">公開日:　<strong>{{release_date}}</strong></p>
+                                <p>上映時間:　<strong>{{runtime}}</strong></p>
+                                <p class="pl-4">ユーザー評価:　<strong>{{vote_average}} / 10.0</strong></p>
+                            </div>
+                            <p class="movie_detail mb-0">概要・あらすじ</p>
+                            <div class="movie_overview d-flex flex-colum w-100">
+                                <p>{{overview}}</p>
+                            </div>
+
+                            <form action="{% url 'movie:saved_movie' %}" method="POST">
+                                {% csrf_token %}
+                                <p class="movie_detail mt-4　mb-0">評価を選択してください</p>
+                                <select name="vote_rate" size="1">
+                                    <option value="評価なし">評価なし</option>
+                                    {% with ''|center:10 as range %}
+                                    {% for _ in range %}
+                                        <option value="{{ forloop.counter }}">{{ forloop.counter }}</option>
+                                    {% endfor %}
+                                    {% endwith %}
+                                </select>
+                                <p class="movie_detail　pt-4 mb-0">感想・要約を入力してください</p>
+                                <textarea type="search" name="sum_text" class="form-control input-group-prepend"></textarea>
+                                <button type="submit" name="save_btn" class="btn btn-primary mt-2" value={{id}}>保存</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- 書籍登録画面  -->
+
+            </div>
+            <!-- 下のコンテンツ -->
+        </div>
+      <!-- 全ページの右のコンテンツ -->
+    </div>
+</main>
+
+{% endblock %}

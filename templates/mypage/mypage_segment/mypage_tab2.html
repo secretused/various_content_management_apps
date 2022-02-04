@@ -1,0 +1,110 @@
+{% extends 'mysite/base.html' %}
+{% load static %}
+{% load boost %}
+ 
+{% block head %} 
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/snippets/small_header.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/movie.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/snippets/mypage.css' %}">
+
+{% endblock %}
+
+{% block content %}
+<main class="h-100">
+    <div class="page-wrapper d-flex flex-row h-100 w-100">
+      
+      <!-- 全ページの右のコンテンツ -->
+        <div class="page-content h-100 w-100">
+
+            {% include 'mypage/mypage_segment/mypage_header.html' %}
+            {% include 'mypage/mypage_segment/mypage_segment.html' %}
+
+            <!-- 下のコンテンツ -->
+            <div class="big-display">
+
+              <div class="page_title w-100 pt-5 pb-3">
+                <p class="mypage_title">書籍ページ({{count}})</p>
+              </div>
+
+              <!-- search_movie_all -->
+              <div class="mypage_row px-5">
+                <!-- movie_row -->
+                {% for book in pages %}
+                <div class="mypage_data_row d-flex flex-row mx-3 mb-4" style="border: 1px solid rgb(0, 0, 0, 0.1);"> 
+                  <img src="{{book.ImageUrl}}" class="movie_mypage_img p-2">
+                  <div class="p-2 w-100">
+                    <div class="top_row w-100">
+                      <div class="scroll_title d-flex w-100">
+                        <p class="movie_title mb-1">{{book.title}}</p>
+                      </div>                
+                      <div class="d-flex flex-row pt-2">
+                        <p class="release_date m-0 pr-4">閲覧日:　<strong>{{book.created_at|date:"Y-m-d"}}</strong></p>
+                        <p class="vote_average m-0">評価:　<strong>{{book.vote_rate}} / 10</strong></p>
+                      </div>
+                      <p class="vote_average pt-2 mb-1">感想:　<strong>{{book.summary}}</strong></p>
+                      <a href="{{book.itemUrl}}" class="detail_btn mt-0 mb-0">詳細ページへ</a>
+
+                    </div>
+                    <!-- ここに線を入れたい -->
+                    <div class="under_row d-flex flex-row mt-2">
+                      {% if user.is_authenticated %}
+                        <form class="save_button pt-1 pr-2" action="{% url 'book:mypage_edit_book' %}" method="POST">
+                          {% csrf_token %} 
+                          <button type="submit" name="mypage_edit_btn" class="btn btn-sm btn-secondary" value={{book.id}}>編集</button>
+                        </form>
+                         
+                        <form class="save_button pt-1" action="{% url 'book:mypage_delete_book' %}" method="POST">
+                          {% csrf_token %} 
+                          <button type="submit" name="mypage_delete_btn" class="btn btn-sm btn-danger" value={{book.id}}>削除</button>
+                        </form>
+                        {% endif %}
+                    </div> 
+                  </div> 
+                </div>
+                {% endfor %}
+                <!-- movie_row -->
+              </div>
+              <div class="pagenations pt-4 pb-3">
+                {% if pages.has_other_pages %}
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination">
+                        {% if pages.has_previous %}
+                            <li><a class="page-link text-primary d-inline-block" href="?page={{ pages.previous_page_number }}"><<</a></li>
+                        {% else %}
+                            <li class="disabled"><div class="page-link text-secondary d-inline-block disabled" href="#"><<</div></li>
+                        {% endif %}
+            
+                        {% if pages.has_previous %}
+                            {% if pages.previous_page_number != 1 %}
+                                <li><a class="page-link text-primary d-inline-block" href="?page=1">1</a></li>
+                                <li>…</li>
+                            {% endif %}
+                            <li><a class="page-link text-primary d-inline-block" href="?page={{ pages.previous_page_number }}">{{ pages.previous_page_number }}</a></li>
+                        {% endif %}
+                        <li class="disabled"><div class="page-link text-secondary d-inline-block disabled" href="#">{{ pages.number }}</div></li>
+                        {% if pages.has_next %}
+                            <li><a class="page-link text-primary d-inline-block" href="?page={{ pages.next_page_number }}">{{ pages.next_page_number }}</a></li>
+                            {% if pages.next_page_number != pages.paginator.num_pages %}
+                                <li>…</li>
+                                <li><a class="page-link text-primary d-inline-block" href="?page={{ pages.paginator.num_pages }}">{{ pages.paginator.num_pages }}</a></li>
+                            {% endif %}
+                        {% endif %}
+                        {% if pages.has_next %}
+                            <li><a class="page-link text-primary d-inline-block" href="?page={{ pages.next_page_number }}">>></a></li>
+                        {% else %}
+                            <li class="disabled"><div class="page-link text-secondary d-inline-block disabled" href="#">>></div></li>
+                        {% endif %}
+                    </ul>
+                </nav>
+                {% endif %}
+              </div>
+              <!-- search_movie_all -->
+            </div>
+            <!-- 下のコンテンツ -->
+        </div>
+      <!-- 全ページの右のコンテンツ -->
+    </div>
+</main>
+
+{% endblock %}

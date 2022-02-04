@@ -1,0 +1,23 @@
+<!doctype html>
+{% load static %}
+{% load boost %}
+<html lang="ja" class="h-100">
+ 
+    <head>
+        {% include 'mysite/snippets/head.html' %}
+        <!-- Bootstrap CSS -->
+        <!-- menubarとheaderbarを固定化 -->
+        <link rel="stylesheet" type="text/css" href="{% static 'css/snippets/header.css' %}">
+        {% block head %}
+        {% endblock %}
+    </head>
+    
+    <body class="h-100 bg-light">
+        {% block content %}
+        {% endblock %}
+        <script type="text/javascript" src="{% static 'js/main.js' %}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.0.0-alpha1/js/bootstrap.min.js"></script>
+    </body>
+
+</html> 

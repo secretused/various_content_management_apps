@@ -1,0 +1,76 @@
+{% extends 'mysite/base.html' %}
+{% load static %}
+{% load boost %}
+ 
+{% block head %} 
+<!-- movieの子を適応されて欲しい。 --> 
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/snippets/small_header.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/english.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="h-100">
+    <div class="page-wrapper d-flex flex-row h-100 w-100">
+      
+      {% include 'mysite/snippets/sidebar.html' %}
+      
+      <!-- 全ページの右のコンテンツ -->
+        <div class="page-content w-100" >
+
+          {% include 'mysite/snippets/header.html' %}
+          {% include 'mysite/snippets/small_header.html' %}
+          
+            <!-- 下のコンテンツ -->
+            <div class="big-display w-100">
+                <div class="translate mx-2">
+                    <form class="input-group w-25 float-right mx-4 mb-3 mt-5 pr-5 pl-3" action="{% url 'english:translate' %}" method="POST">
+                        {% csrf_token %}
+                        <input type="search" name="search_query" class="form-control input-group-prepend" placeholder="保存したい英語を入力"></input>
+                        <span class="input-group-btn input-group-append">
+                        <button type="submit" name="btn-search" class="btn btn-primary"><i class="fas fa-search"></i> 検索</button>
+                        </span>
+                    </form>
+                </div>
+
+                <div class="translate_result d-flex flex-column">
+                    <p class="translate_title">翻訳結果</p>
+                    <div class="translate_row">
+                        <form method="POST" action="{% url 'english:get_youtube_data' %}">
+                            {% csrf_token %}
+
+                            <input type="hidden" name="query_lang" value="{{query_lang}}">
+                            <input type="hidden" name="changed_lang" value="{{changed_lang}}">
+    
+                            <div class="d-flex flex-column px-4 pb-2">
+                                <label><strong>翻訳前({{query_lang}})</strong></label>
+                                <input type="text" name="query_text" value="{{query_text}}" class="english_result"> 
+                            </div>
+        
+                            <div class="d-flex flex-column px-4 py-2">
+                                <label><strong>翻訳結果({{changed_lang}})</strong></label>
+                                <input type="text" name="changed_text" value="{{changed_text}}" class="english_result"> 
+                            </div>
+                            
+                            {% if user.is_authenticated %}
+                            <div class="px-4 pt-2 pb-3">
+                                <button name="btn-search" type="submit" class="btn btn-primary">保存</button>
+                            </div>
+                            {% else %}
+                            <form class="save_button pt-1" action="/login/" method="POST">
+                                {% csrf_token %} 
+                                <button name="btn-search" type="submit" class="btn btn-primary" value="True">保存</button>
+                            </form>
+                            {% endif %}
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <!-- 下のコンテンツ -->
+        </div>
+      <!-- 全ページの右のコンテンツ -->
+    </div>
+</main>
+
+{% endblock %}

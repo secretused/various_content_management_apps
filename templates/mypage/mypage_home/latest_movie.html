@@ -1,0 +1,33 @@
+{% load static %}
+<p　class="latest_row_title mb-1">最近見た映画</p>
+{% for movie in latest_movie %}
+<div class="saved_movie-row d-flex flex-row mb-1">
+    <img src="https://image.tmdb.org/t/p/w92{{movie.poster_path}}" class="saved_img p-1">
+    <div class="d-flex flex-column pl-2 w-100">
+        <div class="top_saved_row pt-2 mb-1 d-flex flex-row">
+            <p class="saved_title mb-0">題名:<strong>{{movie.title}}</strong></p>
+        </div>
+        <div class="d-flex flex-row pb-1">
+            <p class="release_date pr-3 m-0">公開日: {{movie.release_date}}</p>
+            <!-- 視聴日 from DB -->
+            <p class="vote_average pr-3 m-0">視聴日: {{movie.created_at|date:"Y-m-d"}}</p>
+            <p class="saved_title mb-0">評価: {{movie.vote_rate}}</p>
+        </div>
+        
+        <div class="under_row d-flex flex-row mt-1">
+            <p class="auther_name mb-0 mr-3">created by <strong>{{movie.auther}}</strong></p>
+            {% if user.is_authenticated %}
+            <form class="save_button pt-1 pr-2" action="{% url 'movie:mypage_edit_movie' %}" method="POST">
+                {% csrf_token %} 
+                <button type="submit" name="mypage_edit_btn" class="btn btn-sm btn-secondary" value={{movie.id}}>編集</button>
+            </form>
+            
+            <form class="save_button pt-1" action="{% url 'movie:mypage_delete_movie' %}" method="POST">
+                {% csrf_token %} 
+                <button type="submit" name="mypage_delete_btn" class="btn btn-sm btn-danger" value={{movie.id}}>削除</button>
+            </form>
+            {% endif %}
+        </div> 
+    </div>
+</div>
+{% endfor %}

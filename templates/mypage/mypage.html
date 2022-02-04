@@ -1,0 +1,101 @@
+{% extends 'mysite/base.html' %}
+{% load static %}
+ 
+{% block head %} 
+<!-- movieの子を適応されて欲しい。 --> 
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/snippets/small_header.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/movie.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/book.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/idea.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/english.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/snippets/mypage.css' %}">
+{% endblock %}
+ 
+{% block content %}
+<main class="h-100">
+    <div class="page-wrapper d-flex flex-row h-100 w-100">
+      
+      <!-- 全ページの右のコンテンツ -->
+        <div class="page-content h-100 w-100" >
+
+            {% include 'mypage/mypage_segment/mypage_header.html' %}
+            
+            <!-- 下のコンテンツ -->
+            <div class="mypage_display">
+                {% include 'mypage/mypage_segment/mypage_segment.html' %}
+                <div class="mypage_content w-100 h-100 d-flex flex-row">
+                  <div class="left_content">
+                    <div class="user_saved_sum mt-5">
+                      <h3 class="saved_sum_title pt-2 mx-3">ユーザー累計保存数</h3>
+                      <div class="saved_sum d-flex flex-row justify-content-between">
+                        <div class="movie_sum d-flex flex-column pl-3 pt-1">
+                          <p class="mb-1">映画総数</p>
+                          <p class="sum_count"><strong>{{movie_count}}本</strong></p>
+                        </div>
+                        <div class="movie_sum d-flex flex-column pl-2 pt-1">
+                          <p class="english_title mb-1">英単語</p>
+                          <p class="sum_count"><strong>{{english_count}}フレーズ</strong></p>
+                        </div>
+                        <div class="movie_sum d-flex flex-column pl-2 pt-1">
+                          <p class="mb-1">アイデア総数</p>
+                          <p class="sum_count"><strong>{{idea_count}}個</strong></p>
+                        </div>
+                        <div class="movie_sum d-flex flex-column pl-2 pr-3 pt-1">
+                          <p class="mb-1">書籍総数</p>
+                          <p class="sum_count"><strong>{{book_count}}冊</strong></p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <p class="latest_title mb-2">最近追加したもの</p>
+                    <div class="latest_row_content px-4 pt-3 pb-4">
+                      <div class="latest_row d-flex flex-column">
+                        <div class="latest_movie w-100 mt-1">
+                          {% include 'mypage/mypage_home/latest_movie.html' %}
+                        </div>
+                        <div class="latest_book w-100 mt-1">
+                          {% include 'mypage/mypage_home/latest_book.html' %}
+                        </div>
+                        <div class="latest_idea w-100 mt-1">
+                          {% include 'mypage/mypage_home/latest_idea.html' %}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="right_content">
+                    {% for user in user_profile %}
+                    <div class="profile_content mt-5 ml-4">
+                      <div class="profile_row">
+                        <h3 class="profile_title pt-4">User Profile</h3>
+                        <img src="{{user.account_image}}" class="account_image">
+                        <div class="profile_name d-flex flex-row pb-0">
+                          <div class="pr-2 mt-2">ユーザーネーム:</div>
+                          <p class="profile_user_name mb-0"><strong>{{user.username}}</strong></p>
+                        </div>
+                        <div class="profile_name d-flex flex-row pb-0">
+                          <p class="mb-2"><strong>{{user.firstName}}</strong></p>
+                          <p class="mb-2"><strong>{{user.lastName}}</strong></p>
+                        </div>
+                        <p class="mb-4">{{user.email}}</p>
+                        <form action="{% url 'mypage:profile_edit' %}" method="POST">
+                          {% csrf_token %}
+                          <button type="submit" name="profile_edit" class="btn btn-primary mb-4" value={{user.id}}>編集</button>
+                        </form>
+                      </div>
+                    </div>
+                    {% endfor %}
+                    <div class="latest_english mr-5 ml-4 mb-5">
+                      {% include 'mypage/mypage_home/latest_english.html' %}
+                    </div>
+                  </div>
+                </div>
+            </div>
+            <!-- 下のコンテンツ -->
+        </div>
+      <!-- 全ページの右のコンテンツ -->
+    </div>
+</main>
+
+{% endblock %}

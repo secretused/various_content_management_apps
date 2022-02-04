@@ -1,0 +1,116 @@
+{% extends 'mysite/base.html' %}
+{% load static %}
+ 
+{% block head %} 
+<!-- movieの子を適応されて欲しい。 --> 
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/snippets/small_header.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/movie.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/book.css' %}">
+{% endblock %}
+ 
+{% block content %}
+<main class="h-100">
+    <div class="page-wrapper d-flex flex-row h-100 w-100">
+      
+      {% include 'mysite/snippets/sidebar.html' %}
+      
+      <!-- 全ページの右のコンテンツ -->
+        <div class="page-content h-100 w-100" >
+
+            {% include 'mysite/snippets/header.html' %}
+            {% include 'mysite/snippets/small_header.html' %}
+            
+            <!-- 下のコンテンツ -->
+            <div class="big-display h-100">
+              <p class="movie_home_title mb-1 ml-5">Book Groupe</p>
+              <form class="input-group w-25 float-right mx-4 mb-4 mt-5" action="{% url 'book:search_books' %}" method="POST">
+                {% csrf_token %}
+                <input type="search" name="search_query" class="form-control input-group-prepend" placeholder="書籍のタイトルを入力"></input>
+                <span class="input-group-btn input-group-append">
+                  <button type="submit" name="btn-search" class="btn btn-primary"><i class="fas fa-search"></i> 検索</button>
+                </span>
+              </form>
+             
+              <div class="movie_content d-flex flex-row w-100">
+                <!-- saved_movie -->
+                <div class="saved_book ml-5 mr-4 d-flex flex-column">
+                  <p class="saved_header pl-1 mb-1">ユーザーが最近読んだ書籍</p>
+                  <!-- saves_movie_row -->
+                  {% for book in db_books %}
+                  <div class="saved_book-row d-flex flex-row mb-1">
+                    <img src="{{book.ImageUrl}}" class="saved_img p-1">
+                    <div class="d-flex flex-column pl-2 w-100">
+                      <div class="top_saved_row pt-2 mb-1 d-flex flex-row"> 
+                        <p class="saved_title mb-0">書籍名: <strong>{{book.title}}</strong></p>
+                      </div>
+                      <div class="d-flex flex-row">
+                        <p class="release_date pr-3 m-0">公開日: {{book.salesDate}}</p>
+                        <p class="vote_average pr-3 m-0">視聴日: {{book.created_at|date:"Y-m-j"}}</p>
+                        <p class="vote_average m-0">評価: {{book.vote_rate}}</p>
+                      </div>
+                      <div class="under_row d-flex flex-row">
+                        <p class="auther_name mb-0 mr-3">created by <strong>{{book.auther}}</strong></p>
+                        {% if user.id == book.user_id %}
+                        <form class="save_button pt-1 pr-2" action="{% url 'book:edit_book' %}" method="POST">
+                          {% csrf_token %} 
+                          <button type="submit" name="db_edit_btn" class="btn btn-sm btn-secondary" value={{book.id}}>編集</button>
+                        </form>
+                         
+                        <form class="save_button pt-1" action="{% url 'book:saved_book' %}" method="POST">
+                          {% csrf_token %} 
+                          <button type="submit" name="db_delete_btn" class="btn btn-sm btn-danger" value={{book.id}}>削除</button>
+                        </form>
+                        {% endif %}
+                      </div> 
+                    </div>　
+                  </div>
+                  {% endfor %}
+                  <!-- saves_movie_row -->
+                </div>
+                <!-- saved_movie -->
+
+                <div　class="recommend_book d-flex flex-column w-100">
+                  <!-- now_loading -->
+                  <p class="now_mov_header pb-1 mb-0">最新小説本ランキング</p>
+                  <div class="now_loading_book d-flex flex-row">
+                    {% for essay in got_book1 %}
+                    <!-- 467 × 146 -->
+                      <img src="{{essay.ImageUrl}}" class="book_img py-1 px-1">
+                    {% endfor %}
+                  </div>
+                
+                  <!-- now_loading -->
+                  <p class="now_mov_header mt-2 pb-1 mb-0">最新ビジネス本ランキング</p>
+                  <div class="now_loading_book d-flex flex-row">
+                    {% for bussines in got_book2 %}
+                    <!-- 467 × 146 -->
+                      <img src="{{bussines.ImageUrl}}" class="book_img py-1 pr-2">
+                    {% endfor %}
+                  </div>
+               
+                  <!-- now_loading -->
+                  <p class="now_mov_header mt-2 pb-1 mb-0">最新技術本ランキング</p>
+                  <div class="now_loading_book d-flex flex-row">
+                    {% for paperbook in got_book3 %}
+                    <!-- 467 × 146 -->
+                      <img src="{{paperbook.ImageUrl}}" class="book_img py-1 px-1">
+                    {% endfor %}
+                  </div>
+                  {% if user.id == 1 %}
+                  <form class="reload_btn pt-2 pl-4" method="POST" action="{% url 'book:reload_data' %}">
+                    {% csrf_token %}
+                    <button type="submit" name="reload_btn" class="btn btn-primary">更新</button>
+                  </form>
+                  {% endif %}
+                </div>
+
+              </div>
+            </div>
+            <!-- 下のコンテンツ -->
+        </div>
+      <!-- 全ページの右のコンテンツ -->
+    </div>
+</main>
+
+{% endblock %}

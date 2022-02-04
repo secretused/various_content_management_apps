@@ -1,0 +1,47 @@
+{% extends 'mysite/base.html' %}
+{% load static %}
+ 
+{% block head %} 
+<!-- movieの子を適応されて欲しい。 --> 
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/index.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="h-100">
+    <div class="page-wrapper d-flex flex-row h-100 w-100">
+      
+        {% include 'mysite/snippets/sidebar.html' %}
+      
+      <!-- 全ページの右のコンテンツ -->
+        <div class="page-content h-100 w-100">
+
+            {% include 'mysite/snippets/header.html' %}
+
+            <!-- index_mainのコンテンツ -->
+            <!-- 下のコンテンツ -->
+            <div class="main-wrapper" id="mainwrapper">
+                <div class="img_container main-box1">
+                    <a class="box box1" href="movie/">Movie</a>
+                </div>
+                <div class="img_container main-box2">
+                    <a class="box box2" href="#">Blog</a>
+                </div>
+                <div class="img_container main-box3">
+                    <a class="box box3" href="idea/">Idea</a>
+                </div>
+                <div class="img_container main-box4">
+                    <a class="box box4" href="book/">Book</a>
+                </div>
+                <div class="img_container main-box5">
+                    <a class="box box5" href="english/">English</a>
+                </div>
+            </div>
+            <!-- 下のコンテンツ -->
+
+        </div>
+      <!-- 全ページの右のコンテンツ -->
+    </div>
+</main>
+
+{% endblock %}

@@ -1,0 +1,20 @@
+<!-- 各appのHomeを作成してurlを通したらその都度urlを変更する -->
+<!-- 小さいheader -->
+<div class="main-wrapper" id="mainwrapper">
+  <form class="img_container main-box1" action="{% url 'mypage:mypage_tab1' %}" method="POST">
+      <a class="box box1" href="{% url 'mypage:mypage_tab1' %}">Movie</a>
+  </form> 
+  <div class="img_container main-box2">
+      <a class="box box2" href="#">Blog</a>
+  </div>
+  <div class="img_container main-box3">
+      <a class="box box3" href="{% url 'mypage:mypage_tab3' %}">Idea</a>
+  </div>
+  <form class="img_container main-box4" action="{% url 'mypage:mypage_tab2' %}" method="POST">
+      <a class="box box4" href="{% url 'mypage:mypage_tab2' %}">Book</a>
+  </form>
+  <div class="img_container main-box5">
+      <a class="box box5" href="{% url 'mypage:mypage_tab5' %}">English</a>
+  </div>
+</div>
+<!-- 小さいheader --> 

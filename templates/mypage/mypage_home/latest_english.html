@@ -1,0 +1,14 @@
+{% load static %}
+{% load boost %}
+<div class="user_english mx-4 my-4">
+    <div class="d-flex flex-row">
+      <p class="now_mov_header pb-1 mb-0">マイ単語帳</p>
+      <a href="{% url 'mypage:mypage_tab5' %}" class="more_english_btn">もっと見る</a>
+    </div>
+    {% for vocablary in latest_english%}
+    <div class="user_english_row d-flex flex-column mb-2">
+      <p class="user_search_text my-1 pl-1 pr-2">{{vocablary.query_lang}}: <strong>{{vocablary.search_text}}</strong></p>
+      <p class="user_result my-1 pl-2 pr-2">{{vocablary.changed_lang}}: <strong>{{vocablary.changed_text}}</strong></p>
+    </div>
+    {% endfor %}
+</div>

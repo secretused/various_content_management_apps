@@ -1,0 +1,57 @@
+{% extends 'mysite/base.html' %}
+{% load static %}
+{% load boost %}
+ 
+{% block head %} 
+<!-- movieの子を適応されて欲しい。 --> 
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/snippets/small_header.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/english.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="h-100">
+    <div class="page-wrapper d-flex flex-row h-100 w-100">
+      
+      {% include 'mysite/snippets/sidebar.html' %}
+      
+      <!-- 全ページの右のコンテンツ -->
+        <div class="page-content w-100" >
+
+          {% include 'mysite/snippets/header.html' %}
+          {% include 'mysite/snippets/small_header.html' %}
+          
+            <!-- 下のコンテンツ -->
+            <div class="big-display w-100">
+
+                <div class="translate_result d-flex flex-column">
+                    <p class="edit_translate_title">フレーズ編集画面</p>
+                    <div class="translate_row">
+                        <form method="POST" action="{% url 'english:english_edit' %}">
+                            {% csrf_token %}
+                            
+                            <div class="d-flex flex-column px-4 pb-2">
+                                <label><strong>翻訳前({{query_lang}})</strong></label>
+                                <input type="text" name="query_text" value="{{query_text}}" class="english_result"> 
+                            </div>
+        
+                            <div class="d-flex flex-column px-4 py-2">
+                                <label><strong>翻訳結果({{changed_lang}})</strong></label>
+                                <input type="text" name="changed_text" value="{{changed_text}}" class="english_result"> 
+                            </div>
+        
+                            <div class="px-4 pt-2 pb-3">
+                                <button name="edit_save_btn" type="submit" class="btn btn-primary" value="{{edit_id}}">保存</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <!-- 下のコンテンツ -->
+        </div>
+      <!-- 全ページの右のコンテンツ -->
+    </div>
+</main>
+
+{% endblock %}

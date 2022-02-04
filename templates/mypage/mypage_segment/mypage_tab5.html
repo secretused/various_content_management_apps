@@ -1,0 +1,98 @@
+{% extends 'mysite/base.html' %}
+{% load static %}
+{% load boost %}
+ 
+{% block head %} 
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/snippets/small_header.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/snippets/mypage.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="h-100">
+    <div class="page-wrapper d-flex flex-row h-100 w-100">
+      
+      <!-- 全ページの右のコンテンツ -->
+        <div class="page-content h-100 w-100">
+
+            {% include 'mypage/mypage_segment/mypage_header.html' %}
+            {% include 'mypage/mypage_segment/mypage_segment.html' %}
+
+            <!-- 下のコンテンツ -->
+            <div class="big-display">
+
+                <div class="page_title w-100 pt-5 pb-0">
+                    <p class="mypage_title">マイ単語帳({{count}})</p>
+                </div>
+
+                <!-- search_movie_all -->
+                <div class="mypage_row px-5">
+                    <!-- english_row -->
+                    {% for english in pages %}
+                    <div class="mypage_data_row d-flex flex-row mx-3 mb-4" style="border: 1px solid rgb(0, 0, 0, 0.1);"> 
+                        <div class="p-2 w-100">
+                            <div class="user_english_row d-flex flex-column mb-2">
+                                <p class="user_search_text my-1 pl-1 pr-2">{{english.query_lang}}: <strong>{{english.search_text}}</strong></p>
+                                <p class="user_result my-1 pl-2 pr-2">{{english.changed_lang}}: <strong>{{english.changed_text}}</strong></p>
+                            </div>
+                            <!-- チェックボタン -->
+                            <div class="under_row d-flex flex-row mt-2 pt-2">
+                                <form class="" action="{% url 'mypage:mypage_tab5' %}" method="post" enctype="multipart/form-data">
+                                    {% csrf_token %}
+                                    <label><input type="checkbox" name="check_content" value="1times" class="ml-2" {{english.checkbox_1}}> 1回目</label>
+                                    <label><input type="checkbox" name="check_content" value="2times" class="ml-2" {{english.checkbox_2}}> 2回目</label>
+                                    <label><input type="checkbox" name="check_content" value="3times" class="ml-2" {{english.checkbox_3}}> 3回目 </label>
+                                    <input type="hidden" name="btn_from" value="{{btn_from}}">
+                                    <label><button type="submit" name="check_save_btn" value="{{english.id}}" class="btn check_save_btn btn-secondary mt-0 mb-0 ml-2">保存</button></label>
+                                    <label><button type="submit" name="english_edit_btn" value="{{english.id}}" class="btn check_save_btn btn-primary mt-0 mb-0 ml-2">編集</button></label>
+                                    <label><button type="submit" name="english_delete_btn" value="{{english.id}}" class="btn english_delete_btn btn-danger mt-0 mb-0 ml-2">削除</button></label>
+                                </form>
+                            </div> 
+                        </div> 
+                    </div>
+                    {% endfor %}
+                    <!-- english_row -->
+                </div>
+                <div class="pagenations pt-4 pb-3">
+                    {% if pages.has_other_pages %}
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination">
+                            {% if pages.has_previous %}
+                                <li><a class="page-link text-primary d-inline-block" href="?page={{ pages.previous_page_number }}"><<</a></li>
+                            {% else %}
+                                <li class="disabled"><div class="page-link text-secondary d-inline-block disabled" href="#"><<</div></li>
+                            {% endif %}
+                
+                            {% if pages.has_previous %}
+                                {% if pages.previous_page_number != 1 %}
+                                    <li><a class="page-link text-primary d-inline-block" href="?page=1">1</a></li>
+                                    <li>…</li>
+                                {% endif %}
+                                <li><a class="page-link text-primary d-inline-block" href="?page={{ pages.previous_page_number }}">{{ pages.previous_page_number }}</a></li>
+                            {% endif %}
+                            <li class="disabled"><div class="page-link text-secondary d-inline-block disabled" href="#">{{ pages.number }}</div></li>
+                            {% if pages.has_next %}
+                                <li><a class="page-link text-primary d-inline-block" href="?page={{ pages.next_page_number }}">{{ pages.next_page_number }}</a></li>
+                                {% if pages.next_page_number != pages.paginator.num_pages %}
+                                    <li>…</li>
+                                    <li><a class="page-link text-primary d-inline-block" href="?page={{ pages.paginator.num_pages }}">{{ pages.paginator.num_pages }}</a></li>
+                                {% endif %}
+                            {% endif %}
+                            {% if pages.has_next %}
+                                <li><a class="page-link text-primary d-inline-block" href="?page={{ pages.next_page_number }}">>></a></li>
+                            {% else %}
+                                <li class="disabled"><div class="page-link text-secondary d-inline-block disabled" href="#">>></div></li>
+                            {% endif %}
+                        </ul>
+                    </nav>
+                    {% endif %}
+                </div>
+                <!-- search_movie_all -->
+            </div>
+            <!-- 下のコンテンツ -->
+        </div>
+      <!-- 全ページの右のコンテンツ -->
+    </div>
+</main>
+
+{% endblock %}

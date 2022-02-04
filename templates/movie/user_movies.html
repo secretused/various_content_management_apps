@@ -1,0 +1,90 @@
+{% extends 'mysite/base.html' %}
+{% load static %}
+{% load boost %}
+ 
+{% block head %} 
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/snippets/small_header.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/movie.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="h-100">
+    <div class="page-wrapper d-flex flex-row h-100 w-100">
+      
+        {% include 'mysite/snippets/sidebar.html' %}
+      
+      <!-- 全ページの右のコンテンツ -->
+        <div class="page-content h-100 w-100">
+
+            {% include 'mysite/snippets/header.html' %}
+            {% include 'mysite/snippets/small_header.html' %}
+
+            <!-- 下のコンテンツ -->
+            <div class="big-display">
+              <form class="input-group w-25 float-right mx-4 mb-3 mt-5" action="{% url 'movie:search_movies' %}" method="POST">
+                {% csrf_token %}
+                <input type="search" name="search_query" class="form-control input-group-prepend" placeholder="映画のタイトルを入力"></input>
+                <span class="input-group-btn input-group-append">
+                  <button type="submit" name="btn-search" class="btn btn-primary"><i class="fas fa-search"></i> 検索</button>
+                </span>
+              </form>
+
+
+              <div class="search_header">
+                <p class="search_result_title">{{title}}</p>
+              </div>
+
+              <!-- search_movie_all -->
+              <div class="search_result px-5">
+                <!-- movie_row -->
+                {% for movie,genre in movies|zip:genres %}
+                <div class="movie-row d-flex flex-row mx-3 mb-4" style="border: 1px solid rgb(0, 0, 0, 0.1);"> 
+                  <img src="https://image.tmdb.org/t/p/w92{{movie.poster_path}}" class="movie_img p-2">
+                  <div class="p-2 w-100">
+                    <div class="top_row w-100">
+                      <div class="scroll_title d-flex w-100">
+                        <p class="movie_title mb-1">{{movie.title}}</p>
+                      </div>
+                      <div class="d-flex flex-row">
+                        <p class="release_date m-0 pr-4">公開日:　<strong>{{movie.release_date}}</strong></p>
+                        <p class="vote_average w-50 m-0">評価:　<strong>{{movie.vote_average}} / 10</strong></p>
+                      </div>
+                      
+                      <div class="d-flex flex-row pt-3 pb-2">
+                          <p class="release_date mr-3 m-0">ジャンル:　<strong>{{genre.name}}</strong></p>
+                          <a href="https://www.themoviedb.org/movie/{{movie.id}}?language=ja"class="release_date　w-100 m-0">詳細ページへ</a>
+                      </div>
+
+
+                    </div>
+                    <!-- ここに線を入れたい -->
+                    <div class="under_row d-flex flex-row mt-3">
+                      <p class="m-0 mt-2">いいねボタン</p>
+                      <p class="m-0 mt-2 px-3">タグ一覧</p>
+                      {% if user.is_authenticated %}
+                      <form class="save_button pt-1" action="{% url 'movie:user_movie' %}" method="POST">
+                        {% csrf_token %} 
+                        <button type="submit" name="save_btn" class="btn btn-primary" value={{movie.id}}>保存画面に進む</button>
+                      </form>
+                      {% else %}
+                      <form class="save_button pt-1" action="/login/" method="POST">
+                        {% csrf_token %} 
+                        <button type="submit" name="save_btn" class="btn btn-primary" value={{movie.id}}>保存画面に進む</button>
+                      </form>
+                      {% endif %}
+                    </div> 
+                  </div> 
+                </div>
+                {% endfor %}
+                <!-- movie_row -->
+              </div>
+              <!-- search_movie_all -->
+            </div>
+            <!-- 下のコンテンツ -->
+        </div>
+      <!-- 全ページの右のコンテンツ -->
+    </div>
+</main>
+
+{% endblock %}

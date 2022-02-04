@@ -1,0 +1,102 @@
+{% extends 'mysite/base.html' %}
+{% load static %}
+ 
+{% block head %} 
+<!-- movieの子を適応されて欲しい。 --> 
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/snippets/small_header.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/snippets/profile_edit.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="d-flex flex-row">
+    
+    <div class="page-wrapper d-flex flex-row h-75 w-100">
+
+      <!-- 全ページの右のコンテンツ -->
+        <div class="page-content h-100 w-100" >
+
+            {% include 'mypage/mypage_segment/mypage_header.html' %}
+            {% include 'mypage/mypage_segment/mypage_segment.html' %}
+            <!-- 下のコンテンツ -->
+            <div class="d-flex flex-row w-100 mt-4">
+                <div class="mypage_edit_display d-flex flex-column">
+                    <p class="contact_title pt-5">プロフィール編集</p>
+                    {% for user in profile_data %}
+                    <div class="contact">
+                        <form method="POST" action="{% url 'mypage:profile_email_save' %}" enctype="multipart/form-data">
+                            {% csrf_token %}
+    
+                            <div class="d-flex flex-column px-4 pb-2 pt-3">
+                                <div class="d-flex flex-row pb-0">
+                                    <div class="d-flex flex-column w-50 pr-2">
+                                        <label><strong>名字</strong></label>
+                                        <input type="text" id="id_name" name="first_name" value="{{user.firstName}}"> 
+                                    </div>
+                                    <div class="d-flex flex-column w-50">
+                                        <label><strong>名前</strong></label>
+                                        <input type="text" id="id_name" name="last_name" value="{{user.lastName}}"> 
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex flex-column px-4 pb-2 pt-2">
+                                <label><strong>プロフィール画像</strong></label>
+                                {{ form.as_p }}
+                            </div>
+    
+                            <div class="d-flex flex-column px-4 pb-2 pt-2">
+                                <label><strong>ユーザーネーム</strong></label>
+                                <input type="text" id="id_name" name="user_name" value="{{user.username}}"> 
+                            </div>
+        
+                            <div class="d-flex flex-column px-4 py-2">
+                                <label><strong>メールアドレス</strong></label>
+                                <input type="email" id="id_email" name="user_email" value="{{user.email}}"> 
+                            </div>
+        
+                            <div class="px-4 pt-2 pb-3">
+                                <button name="email_edit" type="submit" class="btn btn-primary" value="{{user.id}}">送信</button>
+                            </div>
+                        </form>
+                    </div>
+                    {% endfor %}
+                </div>
+    
+                <div class="password_edit_display d-flex flex-column">
+                    <p class="contact_title pt-5">パスワード編集</p>
+                    {% for user in profile_data %}
+                    <div class="password_contact">
+                        <form method="POST" action="{% url 'mypage:profile_password_save' %}">
+                            {% csrf_token %}
+    
+                            <div class="d-flex flex-column px-4 pb-2 pt-3">
+                                <label><strong>元のパスワード</strong></label>
+                                <input type="text" id="id_name" name="now_password"> 
+                            </div>
+        
+                            <div class="d-flex flex-column px-4 py-2">
+                                <label><strong>新しいパスワード</strong></label>
+                                <input type="text" id="id_email" name="new_password"> 
+                            </div>
+    
+                            <div class="d-flex flex-column px-4 py-2">
+                                <label><strong>新しいパスワード(確認用)</strong></label>
+                                <input type="text" id="id_email" name="new_password_again"> 
+                            </div>
+        
+                            <div class="px-4 pt-2 pb-3">
+                                <button name="password_edit" type="submit" class="btn btn-primary" value="{{user.id}}">送信</button>
+                            </div>
+                        </form>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <!-- 下のコンテンツ -->
+        </div>
+      <!-- 全ページの右のコンテンツ -->
+    </div>
+</main>
+
+{% endblock %}

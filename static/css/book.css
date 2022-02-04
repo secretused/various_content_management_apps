@@ -1,0 +1,126 @@
+main {
+	height: 79%;
+}
+/* <-- user_books --> */
+.saved_book {
+	min-width: 45% !important;
+	height: 85% !important;
+	margin-bottom: 2%;
+}
+
+.search_book_title {
+	color: black;
+	font-size: x-large;
+	font-family: "Toppan Bunkyu Midashi Gothic", "凸版文久見出しゴシック";
+	opacity: 0.8;
+	display: inline-block;
+	margin-top: 7%;
+	height: 40px;
+}
+
+.saved_book-row {
+	height: 115px !important;
+	border: 1px solid rgb(0, 0, 0, 0.2) !important;
+	border-radius: 5px;
+	font-family: "arial unicode ms";
+	letter-spacing: -0.5px;
+	background-color: white;
+	white-space: nowrap;
+	overflow-x: scroll;
+	/* overflow: hidden; */
+	/* text-overflow: ellipsis; */
+}
+
+.recommend_book {
+	width: 70% !important;
+	margin-right: 5% !important;
+	/* height: 20%; */
+}
+
+.now_loading_book {
+	width: 95%;
+	min-height: 15% !important;
+	overflow-x: scroll;
+	border-radius: 5px;
+	border: 1px solid rgb(0, 0, 0, 0.2) !important;
+}
+
+.book_img {
+	width: 100%;
+}
+
+.detail_btn {
+	text-decoration: none;
+}
+
+.auther_name {
+	margin-top: 1% !important;
+	font-size: large;
+	margin-top: 0.5%;
+}
+/* <-- user_books --> */
+
+/* <-- book_save --> */
+.save_header {
+	margin-left: 45%;
+	padding-top: 3%;
+	/* padding-left: 4%; */
+}
+
+.save_result_title {
+	color: black;
+	font-size: x-large;
+	font-family: "Toppan Bunkyu Midashi Gothic", "凸版文久見出しゴシック";
+	opacity: 0.8;
+	display: inline-block;
+}
+
+.saved_book_row {
+	padding-right: 10%;
+	padding-left: 10%;
+}
+
+.saved_book_img {
+	min-width: 25%;
+	height: auto;
+}
+
+.book_detail {
+	font-size: large;
+}
+
+.saved_book_title {
+	text-align: left;
+	color: black;
+	font-size: x-large;
+	font-family: "Toppan Bunkyu Midashi Gothic", "凸版文久見出しゴシック";
+	opacity: 0.8;
+	white-space: nowrap;
+	overflow-x: scroll;
+	/* overflow: hidden; */
+}
+
+textarea {
+	resize: none;
+	height: 150px;
+}
+/* <-- book_save --> */
+
+/* <-- edit_book --> */
+.db_book_img {
+	min-width: 25% !important;
+}
+
+.db_book_row {
+	padding-right: 15%;
+	padding-left: 15%;
+	padding-bottom: 1%;
+}
+/* <-- edit_book --> */
+
+/* <-- reload_data --> */
+.reload_btn {
+	margin-left: auto;
+	width: 17%;
+}
+/* <-- reload_data --> */

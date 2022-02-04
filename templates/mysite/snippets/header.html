@@ -1,0 +1,34 @@
+{% load static %}
+<!-- トップバー -->
+<nav class="navbar px-3 py-0 my-4 bg-light position-static justify-content-center" id="navbar">
+    <div class="navbar-brand toggle_menu position-absolute start-0" id="toggle_menu">
+        <button class="btn btn-light btn-sm" id="sidebarToggler">
+            <i class="fas fa-bars fa-lg" id="sidebarTogglerFa"></i>
+        </button>
+    </div>
+    <!-- 中央画像 -->
+    <!-- text-muted mx-auto -->
+    <a class="nav-item-image" href="/">
+        <img src="{{ STATIC_URL }}img/header.jpg" class="text-muted" width="200" height="100" alt="サンプル">
+    </a>
+    <ul class="navbar-nav d-flex flex-row position-absolute end-0">
+        <li class="nav-item-underline ml-3 text-muted">
+            <a class="p-2 link-secondary" href="#" style="text-decoration:none;">ABOUT</a>
+        </li>
+        <li class="nav-item-underline ml-3 text-muted">
+            <a class="p-2 link-secondary" href="/contact" style="text-decoration:none;">CONTACT</a>
+        </li>
+        {% if user.is_authenticated %}
+        <li class="nav-item-underline mx-3 text-muted">
+            <a class="p-2 link-secondary" href="{% url 'mypage:mypage' %}" style="text-decoration:none;">MYPAGE</a>
+        </li>
+        {% else %}
+        <li class="nav-item-underline mx-3 text-muted">
+            <a class="p-2 link-secondary" href="/login" style="text-decoration:none;">LOGIN</a>
+            <a>/</a>
+            <a class="p-2 link-secondary" href="/signup" style="text-decoration:none;">SIGNUP</a>
+        </li>
+        {% endif %}
+    </ul>
+</nav>
+<!-- トップバー -->

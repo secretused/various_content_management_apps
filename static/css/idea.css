@@ -1,0 +1,278 @@
+/* <-- top_content --> */
+.top_content {
+	height: auto;
+}
+
+.idea_home_title {
+	margin-top: 3%;
+	color: black;
+	font-size: xx-large;
+	font-family: "Toppan Bunkyu Midashi Gothic", "凸版文久見出しゴシック";
+	opacity: 0.8;
+	display: inline-block;
+}
+.tweet_form {
+	text-align: right;
+	min-width: 70%;
+	min-height: 100%;
+}
+.tweet_btn {
+	min-width: 20%;
+	min-height: 70%;
+	max-height: 100%;
+	text-align: center;
+	font-size: large;
+	font-family: "Toppan Bunkyu Midashi Gothic", "凸版文久見出しゴシック";
+	margin-top: 3.5%;
+}
+/* <-- top_content --> */
+
+/* <-- user_idea --> */
+.saved_header {
+	font-size: large;
+	font-family: "Toppan Bunkyu Midashi Gothic", "凸版文久見出しゴシック";
+	width: 100% !important;
+}
+
+.user_idea_content {
+	max-width: 40%;
+	overflow: hidden;
+	border-radius: 5px;
+}
+
+.saved_idea_row {
+	border-top: 1px solid rgb(0, 0, 0, 0.1) !important;
+	border-right: 1px solid rgb(0, 0, 0, 0.1) !important;
+	border-left: 1px solid rgb(0, 0, 0, 0.1) !important;
+	border-bottom: 1px solid rgb(0, 0, 0, 0.1) !important;
+}
+
+.right_idea_row {
+	overflow: scroll;
+}
+
+.image_comntent {
+	min-width: 7%;
+	max-width: 7%;
+}
+
+.account_image {
+	max-width: 100%;
+	max-height: 100% !important;
+	border-radius: 50%;
+}
+
+.user_idea_title_row {
+	overflow: scroll;
+}
+
+.user_idea_title {
+	min-height: 40%;
+	max-height: 40%;
+	font-size: large;
+	font-family: "Toppan Bunkyu Midashi Gothic", "凸版文久見出しゴシック" "Meiryo";
+	font-weight: 800;
+	white-space: nowrap;
+	color: black;
+	text-decoration: none;
+}
+
+.user_idea_title:hover {
+	color: black;
+	text-decoration: underline;
+}
+
+.user_name_row {
+	display: flex;
+	align-items: center;
+}
+
+.username {
+	font-size: large;
+	font-family: "Meiryo";
+	font-weight: 600;
+}
+
+.save_button {
+	width: 25%;
+	padding: -5%;
+}
+/* <-- user_idea --> */
+
+/* <-- thread_content --> */
+.thread_content {
+	min-width: 45%;
+	max-width: 45%;
+	margin-left: 5%;
+	overflow: hidden;
+	border-radius: 5px;
+}
+
+.detail_image_comntent {
+	min-width: 8%;
+	max-width: 8%;
+}
+
+.user_detail_title {
+	min-height: 40%;
+	max-height: 40%;
+	font-size: xx-large;
+	font-family: "Toppan Bunkyu Midashi Gothic", "凸版文久見出しゴシック" "Meiryo";
+	font-weight: 800;
+	white-space: nowrap;
+	color: black;
+	text-decoration: none;
+}
+
+.detail_row_title {
+	min-width: 35%;
+	font-family: "";
+}
+
+.detail_user_name_row {
+	border-top: 1px solid rgb(0, 0, 0, 0.2) !important;
+	display: flex;
+	align-items: center;
+}
+
+.comment_form {
+	font-size: large;
+	min-width: 85%;
+	max-width: 85%;
+	line-height: 2;
+	padding: 1% 0;
+}
+
+.add_comment_btn {
+	font-size: large;
+	min-width: 20%;
+}
+/* <-- thread_content --> */
+
+/* <-- comment_content --> */
+.comment_content {
+	border-top: 1px solid rgb(0, 0, 0, 0.1) !important;
+	border-right: 1px solid rgb(0, 0, 0, 0.1) !important;
+	border-left: 1px solid rgb(0, 0, 0, 0.1) !important;
+	border-bottom: 1px solid rgb(0, 0, 0, 0.1) !important;
+}
+
+.comment_account_image {
+	min-width: 6%;
+	max-width: 6%;
+	min-height: 6%;
+	max-height: 6%;
+	border-radius: 50%;
+}
+
+.comment_content_row {
+	border-bottom: 1px solid rgb(0, 0, 0, 0.1) !important;
+}
+
+.idea_comment {
+	min-height: 40%;
+	max-height: 40%;
+	font-size: large;
+	font-family: "Toppan Bunkyu Midashi Gothic", "凸版文久見出しゴシック" "Meiryo";
+	font-weight: 800;
+	white-space: nowrap;
+	color: black;
+}
+
+.comment_user_name_row {
+	display: flex;
+	align-items: center;
+}
+
+.more_button {
+	color: #0d6efd;
+	border-color: transparent;
+	background: transparent;
+	white-space: nowrap;
+	min-width: 30%;
+}
+
+.more_button:hover {
+	transition: 0.5s;
+	text-decoration: underline;
+}
+/* <-- comment_content --> */
+
+/* <-- idea_save --> */
+.save_header {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	padding-top: 3%;
+}
+
+.save_result_title {
+	color: black;
+	font-size: x-large;
+	font-family: "Toppan Bunkyu Midashi Gothic", "凸版文久見出しゴシック";
+	opacity: 0.8;
+	display: inline-block;
+}
+
+.idea_save_content {
+	min-width: 60%;
+	max-width: 60%;
+	margin: auto;
+	background-color: rgb(242, 242, 242, 0.5);
+	border: 1px solid rgb(0, 0, 0, 0.1) !important;
+	border-radius: 4px;
+}
+
+.idea_row {
+	border-bottom: 1px solid rgb(0, 0, 0, 0.2) !important;
+}
+
+input {
+	padding: 1%;
+	line-height: 1.5;
+	border: 1px black solid;
+	border-color: rgb(0, 0, 0, 0.2);
+	border-radius: 4px;
+}
+
+textarea {
+	height: 100px;
+	border-color: rgb(0, 0, 0, 0.2);
+	border-radius: 4px;
+}
+
+.row_title {
+	min-width: 30%;
+	font-family: "";
+}
+
+.required_title {
+	vertical-align: top;
+	font-size: small;
+	color: red;
+	opacity: 0.8;
+}
+
+.idea_tag {
+	min-width: 30%;
+}
+
+.idea_price {
+	min-width: 30%;
+}
+
+.sub_title {
+	font-size: small;
+}
+
+.reserve_btn {
+	width: 20%;
+	margin: 0 auto;
+}
+
+.reserve_btn_form {
+	width: 20%;
+	margin: 0 auto;
+}
+/* <-- idea_save --> */

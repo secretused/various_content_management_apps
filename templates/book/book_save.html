@@ -1,0 +1,86 @@
+{% extends 'mysite/base.html' %}
+{% load static %}
+ 
+{% block head %} 
+<!-- movieの子を適応されて欲しい。 --> 
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/snippets/small_header.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/movie.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/book.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="d-flex flex-row">
+    
+    <div class="page-wrapper d-flex flex-row h-100 w-100">
+        
+        {% include 'mysite/snippets/sidebar.html' %}
+
+      <!-- 全ページの右のコンテンツ -->
+        <div class="page-content h-100 w-100" >
+
+            {% include 'mysite/snippets/header.html' %}
+            {% include 'mysite/snippets/small_header.html' %}
+            <!-- 下のコンテンツ -->
+            <div class="big-display">  
+                
+                <form class="input-group w-25 float-right mx-4 my-4" action="{% url 'book:search_books' %}" method="POST">
+                    {% csrf_token %}
+                    <input type="search" name="search_query" class="form-control input-group-prepend" placeholder="書籍のタイトルを入力"></input>
+                    <span class="input-group-btn input-group-append">
+                    <button type="submit" name="btn-search" class="btn btn-primary"><i class="fas fa-search"></i> 検索</button>
+                    </span>
+                </form>
+
+                <div class="save_header w-40">
+                    <p class="save_result_title pt-3">書籍保存画面</p>
+                </div>
+
+                <!-- 書籍登録画面  -->
+                <div class="saved_book_display w-100 pt-2">
+                    <div class="saved_book_row d-flex flex-row pb-4">
+                        <img src="{{largeImageUrl}}" class="saved_book_img">
+                        <div class="right-row w-100 pl-4">
+                            <p class="saved_book_title">{{title}}</p>
+                            <div class="book_detail d-flex flex-colum">
+                                <p class="pr-4">著者・作者:　<strong>{{author}}</strong></p>
+                                <p>出版日:　<strong>{{salesDate}}</strong></p>
+                            </div>
+                            <div class="book_detail d-flex flex-colum w-100">
+                                <p>出版社:　<strong>{{publisherName}}</strong></p>
+                                <p class="pl-4">ジャンル:　<strong>{{genre}}</strong></p>
+                            </div>
+                            <div class="book_detail d-flex flex-colum w-100">
+                                <p>定価:　<strong>{{itemPrice}}円</strong></p>
+                                <p class="pl-4">評価:　<strong>{{reviewAverage}} / 5.0</strong></p>
+                            </div>
+
+                            <form class="" action="{% url 'book:saved_book' %}" method="POST">
+                                {% csrf_token %}
+                                <p class="movie_detail mt-1　mb-0">評価を選択してください</p>
+                                <select name="vote_rate" size="1">
+                                    <option value="評価なし">評価なし</option>
+                                    {% with ''|center:10 as range %}
+                                    {% for _ in range %}
+                                        <option value="{{ forloop.counter }}">{{ forloop.counter }}</option>
+                                    {% endfor %}
+                                    {% endwith %}
+                                </select>
+                                <p class="book_detail　pt-3 mb-0">感想・要約を入力してください</p>
+                                <textarea type="search" name="sum_text" class="form-control input-group-prepend"></textarea>
+                                <br>
+                                <button type="submit" name="save_btn" class="btn btn-primary" value={{isbn}}>保存</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <!-- 書籍登録画面  -->
+
+            </div>
+            <!-- 下のコンテンツ -->
+        </div>
+      <!-- 全ページの右のコンテンツ -->
+    </div>
+</main>
+
+{% endblock %}

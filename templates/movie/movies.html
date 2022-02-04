@@ -1,0 +1,117 @@
+{% extends 'mysite/base.html' %}
+{% load static %}
+ 
+{% block head %} 
+<!-- movieの子を適応されて欲しい。 --> 
+<!-- Bootstrap CSS -->
+<link rel="stylesheet" type="text/css" href="{% static 'css/snippets/small_header.css' %}">
+<link rel="stylesheet" type="text/css" href="{% static 'css/movie.css' %}">
+{% endblock %}
+
+{% block content %}
+<main class="h-100">
+    <div class="page-wrapper d-flex flex-row h-100 w-100">
+      
+      {% include 'mysite/snippets/sidebar.html' %}
+      
+      <!-- 全ページの右のコンテンツ -->
+        <div class="page-content h-100 w-100" >
+
+            {% include 'mysite/snippets/header.html' %}
+            {% include 'mysite/snippets/small_header.html' %}
+
+            <!-- 下のコンテンツ -->
+            <div class="big-display h-100">
+              <p class="movie_home_title mb-1 ml-5">Movie Groupe</p>
+              <form class="input-group w-25 float-right mx-4 mb-4 mt-5" action="{% url 'movie:search_movies' %}" method="POST">
+                {% csrf_token %}
+                <input type="search" name="search_query" class="form-control input-group-prepend" placeholder="映画のタイトルを入力"></input>
+                <span class="input-group-btn input-group-append">
+                  <button type="submit" name="btn-search" class="btn btn-primary"><i class="fas fa-search"></i> 検索</button>
+                </span>
+              </form>
+            
+              <div class="movie_content d-flex flex-row w-100">
+                <!-- saved_movie -->
+                <div class="saved_movie ml-5 mr-4 d-flex flex-column pb-0">
+                  <p class="saved_header pl-1 mb-1">ユーザーが最近見た映画</p>
+                  <!-- saves_movie_row -->
+                  {% for movie in db_movies %}
+                  <div class="saved_movie-row d-flex flex-row mb-1">
+                    <img src="https://image.tmdb.org/t/p/w92{{movie.poster_path}}" class="saved_img p-1">
+                    <div class="d-flex flex-column pl-2 w-100">
+                      <div class="top_saved_row pt-2 mb-1 d-flex flex-row">
+                        <p class="saved_title mb-0">題名:<strong>{{movie.title}}</strong></p>
+                      </div>
+                      <div class="d-flex flex-row pb-1">
+                        <p class="release_date pr-3 m-0">公開日: {{movie.release_date}}</p>
+                        <!-- 視聴日 from DB -->
+                        <p class="vote_average pr-3 m-0">視聴日: {{movie.created_at|date:"Y-m-d"}}</p>
+                        <p class="saved_title mb-0">評価: {{movie.vote_rate}}</p>
+                      </div>
+                      
+                      <div class="under_row d-flex flex-row mt-1">
+                        <p class="auther_name mb-0 mr-3">created by <strong>{{movie.auther}}</strong></p>
+                        {% if user.id == movie.user_id %}
+                        <form class="save_button pt-1 pr-2" action="{% url 'movie:edit_movie' %}" method="POST">
+                          {% csrf_token %} 
+                          <button type="submit" name="db_edit_btn" class="btn btn-sm btn-secondary" value={{movie.id}}>編集</button>
+                        </form>
+                         
+                        <form class="save_button pt-1" action="{% url 'movie:saved_movie' %}" method="POST">
+                          {% csrf_token %} 
+                          <button type="submit" name="db_delete_btn" class="btn btn-sm btn-danger" value={{movie.id}}>削除</button>
+                        </form>
+                        {% endif %}
+                      </div> 
+                    </div>
+                  </div>
+                  {% endfor %}
+                  <!-- saves_movie_row -->
+                </div>
+                <!-- saved_movie -->
+  
+  
+                <!-- recommend_movie -->
+                <div class="recommend_movie d-flex flex-column h-100">
+                  <!-- now_loading -->
+                  <p class="now_mov_header pb-1 mb-0">今週人気が高い映画</p>
+                  <div class="now_loading d-flex flex-row">
+                      {% for movie in week_movies %}
+                      <!-- 467 × 146 -->
+                      <img src="https://image.tmdb.org/t/p/w92{{movie.poster_path}}" class="now_img py-1 px-1">
+                      {% endfor %}
+                  </div>
+                  <!-- now_loading -->
+    
+                  <!-- up_coming -->
+                  <p class="now_mov_header mt-2 pb-1 mb-0">公開中の映画</p>
+                  <div class="now_loading d-flex flex-row">
+                      {% for movie in now_movies %}
+                        <img src="https://image.tmdb.org/t/p/w92{{movie.poster_path}}" class="now_img py-1 px-1">
+                      {% endfor %}
+                  </div>
+                  <!-- up_coming -->
+    
+                  <!-- latest -->
+                  <p class="now_mov_header mt-2 pb-1 mb-0">評価の高い映画</p>
+                  <div class="now_loading d-flex flex-row">
+                      {% for movie in top_movies %}
+                        <img src="https://image.tmdb.org/t/p/w92{{movie.poster_path}}" class="now_img py-1 px-1">
+                      {% endfor %}
+                  </div>
+                  <!-- latest -->
+    
+                  <!-- top_rated -->
+                  <!-- top_rated -->
+                </div>
+                <!-- recommend_movie -->
+              </div>
+            </div>
+            <!-- 下のコンテンツ -->
+        </div>
+      <!-- 全ページの右のコンテンツ -->
+    </div>
+</main>
+
+{% endblock %}
